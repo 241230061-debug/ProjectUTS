@@ -4,7 +4,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
-return Application::configure(basePath: dirname(__DIR__))
+// 1. Buat instance application terlebih dahulu ke dalam variabel $app
+$app = Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
         commands: __DIR__.'/../routes/console.php',
@@ -12,7 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         
-        // TAMBAHKAN BARIS INI UNTUK DAFTARKAN ALIAS MIDDLEWARE KAMU
+        // ALIAS MIDDLEWARE KAMU
         $middleware->alias([
             'ensureuserisadmin' => \App\Http\Middleware\EnsureUserIsAdmin::class, 
         ]);
@@ -21,3 +22,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
+
+// 2. Paksa pindah folder storage ke /tmp milik Vercel sebelum app di-return
+if (isset($_SERVER['VERCEL_URL'])) {
+    $app->useStoragePath('/tmp/storage');
+}
+
+return $app;

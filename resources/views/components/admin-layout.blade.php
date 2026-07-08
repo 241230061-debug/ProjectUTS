@@ -11,7 +11,7 @@
         <aside class="w-64 bg-[#1a3a2a] text-white flex flex-col shadow-xl">
             <div class="p-6">
                 <a href="/" class="text-2xl font-serif font-bold text-white">
-                    🌱 Admin<span class="text-[#c9a84c]">Bol</span>
+                    Admin<span class="text-[#c9a84c]"></span>
                 </a>
             </div>
             
